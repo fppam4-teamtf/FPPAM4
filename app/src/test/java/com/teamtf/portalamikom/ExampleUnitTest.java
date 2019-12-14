@@ -1,4 +1,4 @@
-package com.titfteam.finalproject;
+package com.teamtf.portalamikom;
 
 import org.junit.Test;
 
