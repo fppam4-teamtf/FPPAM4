@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Portal Amikom</string>
 
+    <!-- Start Dummy String -->
     <string name="loream_ipsum">
         "Material is the metaphor.\n\n"
 
@@ -90,4 +91,30 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+
+    <string-array name="info_kampus_titles">
+        <item>Informasi Kampus 1</item>
+        <item>Informasi Kampus 2</item>
+        <item>Informasi Kampus 3</item>
+        <item>Informasi Kampus 4</item>
+        <item>Informasi Kampus 5</item>
+    </string-array>
+
+    <string-array name="info_kampus_info">
+        <item>Ini adalah isi Informasi Kampus 1</item>
+        <item>Ini adalah isi Informasi Kampus 2</item>
+        <item>Ini adalah isi Informasi Kampus 3</item>
+        <item>Ini adalah isi Informasi Kampus 4</item>
+        <item>Ini adalah isi Informasi Kampus 5</item>
+    </string-array>
+
+    <string-array name="info_kampus_images">
+        <item>@drawable/landscape_poster</item>
+        <item>@drawable/landscape_poster</item>
+        <item>@drawable/landscape_poster</item>
+        <item>@drawable/landscape_poster</item>
+        <item>@drawable/landscape_poster</item>
+    </string-array>
+
+    <!-- End Dummy String -->
 </resources>
