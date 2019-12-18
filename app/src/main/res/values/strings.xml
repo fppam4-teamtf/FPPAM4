@@ -111,12 +111,18 @@
     </string-array>
 
     <string-array name="info_kampus_images">
-        <item>@drawable/landscape_poster</item>
-        <item>@drawable/landscape_poster</item>
-        <item>@drawable/landscape_poster</item>
-        <item>@drawable/landscape_poster</item>
-        <item>@drawable/landscape_poster</item>
+        <item>@drawable/dummy_landscape_poster</item>
+        <item>@drawable/dummy_landscape_poster</item>
+        <item>@drawable/dummy_landscape_poster</item>
+        <item>@drawable/dummy_landscape_poster</item>
+        <item>@drawable/dummy_landscape_poster</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="account">Akun</string>
+    <string name="news">Berita</string>
+    <string name="event">Event</string>
 
     <!-- End Dummy String -->
 </resources>
