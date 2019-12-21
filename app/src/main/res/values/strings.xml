@@ -123,6 +123,7 @@
     <string name="account">Akun</string>
     <string name="news">Berita</string>
     <string name="event">Event</string>
+    <string name="login">LOGIN</string>
 
     <!-- End Dummy String -->
 </resources>
