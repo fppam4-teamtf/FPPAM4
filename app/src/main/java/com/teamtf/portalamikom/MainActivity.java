@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,8 @@ import com.teamtf.portalamikom.handler.DatabaseHandler;
 public class MainActivity extends AppCompatActivity {
 
     DatabaseHandler dbHelper;
+
+    SharedPreferences prefs;
     private AppBarLayout appBar;
     private Toolbar toolbar;
     private CustomViewPager vpBase;
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHelper = new DatabaseHandler(this);
+        prefs = getSharedPreferences("login", Context.MODE_PRIVATE);
 
         setUpAdmin();
 

@@ -1,5 +1,7 @@
 package com.teamtf.portalamikom.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,11 +24,12 @@ import com.teamtf.portalamikom.adapter.ViewPagerAdapter;
  */
 public class MainFragment extends Fragment {
 
+    SharedPreferences prefs;
+
     private MainActivity context;
     private ActionBar toolbar;
     private ViewPager vpMain;
     private BottomNavigationView bnvMain;
-    private boolean isLogin;
 
     public MainFragment() {
         // Required empty public constructor
@@ -36,18 +39,17 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View v = inflater.inflate(R.layout.fragment_main, container, false);
 
+        prefs = getContext().getSharedPreferences("login", getContext().MODE_PRIVATE);
         context = (MainActivity) getActivity();
         toolbar = context.getSupportActionBar();
 
-        isLogin = false;
-
-        vpMain = view.findViewById(R.id.vp_main);
+        vpMain = v.findViewById(R.id.vp_main);
         vpMain.setOffscreenPageLimit(3);
         setUpViewPager(vpMain);
 
-        bnvMain = view.findViewById(R.id.bnv_main);
+        bnvMain = v.findViewById(R.id.bnv_main);
         bnvMain.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -56,7 +58,7 @@ public class MainFragment extends Fragment {
                         vpMain.setCurrentItem(0);
                         return true;
                     case R.id.mi_account:
-                        if(!isLogin){
+                        if(!prefs.getBoolean("isLogin", false)){
                             showAuth();
                         } else {
                             vpMain.setCurrentItem(2);
@@ -81,7 +83,7 @@ public class MainFragment extends Fragment {
                 bnvMain.getMenu().getItem(position).setChecked(false);
 
                 if(position == 2){
-                    if(!isLogin){
+                    if(!prefs.getBoolean("isLogin", false)){
                         showAuth();
                     }
                 }
@@ -95,12 +97,9 @@ public class MainFragment extends Fragment {
 
         bnvMain.setSelectedItemId(R.id.mi_news);
 
-        return view;
+        return v;
     }
 
-    public void setLogin(boolean login) {
-        isLogin = login;
-    }
 
     private void showAuth(){
         context.setCurrentItem(1);

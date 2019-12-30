@@ -9,6 +9,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.teamtf.portalamikom.model.UserModel;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "amikom_portal_event.db";
@@ -61,6 +63,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LOG_USER);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NEWS);
+        onCreate(db);
     }
 
     public boolean addUser(String userid, String password, String privilages, String name, String gender, String address){
@@ -93,11 +96,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         else return false;
     }
 
-    public boolean addUserLog(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
+    public UserModel getUserData(String userid, String password){
 
-        return false;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_USER+" WHERE "+USER_ID+"=? AND "+USER_PASS+"=?", new String[]{userid,password});
 
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        UserModel user = new UserModel(cursor.getString(0),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5));
+
+        return user;
     }
 }
