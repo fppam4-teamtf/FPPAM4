@@ -7,30 +7,33 @@
     android:background="@color/light_ed"
     tools:context=".fragment.AccountFragment">
 
-    <RelativeLayout
-        android:id="@+id/rl_fmt_account"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_ed"
-        android:paddingLeft="16dp"
-        android:paddingTop="8dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp">
+        android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_userid"
+            android:id="@+id/cv_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:elevation="5dp"
-            app:cardCornerRadius="4dp">
+            android:elevation="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="16dp">
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp">
+
+                <ImageView
+                    android:id="@+id/iv_profile"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/profile_pic" />
 
                 <TextView
                     android:id="@+id/tv_userid"
@@ -38,33 +41,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/segoe_ui"
                     android:text="@string/value"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/cv_userid"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:elevation="5dp"
-            app:cardCornerRadius="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="@string/name" />
+                    android:textAlignment="center"
+                    android:textSize="14dp" />
 
                 <TextView
                     android:id="@+id/tv_nama"
@@ -72,91 +50,91 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/segoe_ui"
                     android:text="@string/value"
+                    android:textAlignment="center"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_gender"
+        <RelativeLayout
+            android:id="@+id/rl_fmt_account"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/cv_name"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:elevation="5dp"
-            app:cardCornerRadius="4dp">
+            android:layout_height="match_parent"
+            android:background="@color/light_ed"
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp">
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_add_news"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:clickable="true"
+                android:elevation="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="4dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="@string/gender" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/segoe_ui"
+                        android:textStyle="bold"
+                        android:text="Tambah Berita" />
 
-                <TextView
-                    android:id="@+id/tv_gender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="@string/value"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/cv_gender"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:elevation="5dp"
-            app:cardCornerRadius="4dp">
-
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_add_event"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_below="@id/cv_add_news"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:clickable="true"
+                android:elevation="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="4dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="@string/address" />
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/tv_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="@string/value"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </RelativeLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/segoe_ui"
+                        android:textStyle="bold"
+                        android:text="Tambah Event" />
 
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="16dp"
-        android:background="@color/colorPrimary"
-        android:text="LOGOUT"
-        android:textColor="@color/light_ed" />
-
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv_add_event"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/grey"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="LOGOUT"
+                android:textColor="@color/light_ed" />
+        </RelativeLayout>
+    </LinearLayout>
 </FrameLayout>

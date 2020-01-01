@@ -124,6 +124,13 @@
     <string name="news">Berita</string>
     <string name="event">Event</string>
     <string name="login">LOGIN</string>
+    <string name="value">value</string>
+    <string name="address">Alamat :</string>
+    <string name="gender">Gender :</string>
+    <string name="name">Nama :</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="quest_sure">Anda yakin?</string>
 
     <!-- End Dummy String -->
 </resources>

@@ -1,7 +1,10 @@
 package com.teamtf.portalamikom.fragment;
 
 import android.animation.Animator;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -60,26 +63,44 @@ public class AccountFragment extends Fragment{
 
         tvUserId = v.findViewById(R.id.tv_userid);
         tvUserName = v.findViewById(R.id.tv_nama);
-        tvGender = v.findViewById(R.id.tv_gender);
-        tvAddress = v.findViewById(R.id.tv_address);
+//        tvGender = v.findViewById(R.id.tv_gender);
+//        tvAddress = v.findViewById(R.id.tv_address);
 
         if (!prefs.getAll().isEmpty()){
             tvUserId.setText(prefs.getString("userid","value"));
             tvUserName.setText(prefs.getString("name","value"));
-            tvGender.setText(prefs.getString("gender","value"));
-            tvAddress.setText(prefs.getString("address","value"));
+//            tvGender.setText(prefs.getString("gender","value"));
+//            tvAddress.setText(prefs.getString("address","value"));
         }
 
         Button btnLogout = v.findViewById(R.id.btn_logout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = prefs.edit();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setCancelable(true);
+                builder.setTitle("LOGOUT");
+                builder.setMessage("Anda Yakin?");
+                builder.setPositiveButton(getActivity().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences.Editor editor = prefs.edit();
 
-                editor.clear();
-                editor.apply();
+                        editor.clear();
+                        editor.apply();
 
-                main.reloadFragmnet();
+                        main.reloadFragmnet();
+                    }
+                });
+                builder.setNegativeButton(getActivity().getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
