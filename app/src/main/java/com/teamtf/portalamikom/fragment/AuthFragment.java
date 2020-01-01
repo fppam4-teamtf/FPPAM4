@@ -1,14 +1,12 @@
 package com.teamtf.portalamikom.fragment;
 
-
+import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.teamtf.portalamikom.MainActivity;
 import com.teamtf.portalamikom.R;
@@ -27,33 +26,27 @@ import com.teamtf.portalamikom.model.UserModel;
  */
 public class AuthFragment extends Fragment {
 
-    MainFragment mainFragment;
-
-    DatabaseHandler dbHandler;
-    SharedPreferences prefs;
+    private DatabaseHandler dbHandler;
+    private SharedPreferences prefs;
 
     private EditText etUserId;
     private EditText etPassword;
-    private Button btnLogin;
 
     public AuthFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_auth, container, false);
 
-        mainFragment = new MainFragment();
-
         dbHandler = new DatabaseHandler(getContext());
         prefs = getContext().getSharedPreferences("login", getContext().MODE_PRIVATE);
 
         etUserId = v.findViewById(R.id.et_userid);
         etPassword = v.findViewById(R.id.et_pass);
-        btnLogin = v.findViewById(R.id.btn_login);
+        Button btnLogin = v.findViewById(R.id.btn_login);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,8 +76,10 @@ public class AuthFragment extends Fragment {
                         Log.d("TRY_SHARED_PREFERENCES", "onClick: " + prefs.getAll());
 
                         MainActivity mainActivity = (MainActivity) getActivity();
-                        mainActivity.setCurrentItem(0);
-
+                        assert mainActivity != null;
+                        MainFragment main = new MainFragment();
+                        mainActivity.replaceFragment(main,"Main View Fragment");
+                        mainActivity.setUpToolbar();
                     } else {
                         Toast.makeText(getContext(), "User Id atau Password tidak dikenali, Silahkan coba lagi.", Toast.LENGTH_SHORT).show();
                     }

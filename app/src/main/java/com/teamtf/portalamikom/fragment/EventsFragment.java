@@ -21,6 +21,10 @@ public class EventsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static EventsFragment newInstance(){
+        return new EventsFragment();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

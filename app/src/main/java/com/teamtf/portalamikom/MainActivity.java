@@ -2,31 +2,32 @@ package com.teamtf.portalamikom;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 
-import com.google.android.material.appbar.AppBarLayout;
-import com.teamtf.portalamikom.adapter.ViewPagerAdapter;
-import com.teamtf.portalamikom.custom.CustomViewPager;
-import com.teamtf.portalamikom.fragment.AuthFragment;
 import com.teamtf.portalamikom.fragment.MainFragment;
 import com.teamtf.portalamikom.handler.DatabaseHandler;
 
 public class MainActivity extends AppCompatActivity {
 
-    DatabaseHandler dbHelper;
+    private DatabaseHandler dbHelper;
 
-    SharedPreferences prefs;
-    private AppBarLayout appBar;
+    private SharedPreferences prefs;
     private Toolbar toolbar;
-    private CustomViewPager vpBase;
+
+    private FragmentManager manager;
+    private MainFragment main;
+    private Fragment currentFragment;
+
+    public MainActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,73 +35,66 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHelper = new DatabaseHandler(this);
-        prefs = getSharedPreferences("login", Context.MODE_PRIVATE);
+        prefs = getPreferences(Context.MODE_PRIVATE);
 
         setUpAdmin();
 
-        appBar = findViewById(R.id.appbar);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-            appBar.setPadding(0,getStatusBarHeight(),0,0);
-        }
-
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backTo();
+                setUpToolbar();
+                onBackPressed();
             }
         });
 
-        vpBase = findViewById(R.id.vp_base);
-        setUpViewPager(vpBase);
-
-        vpBase.setPagingEnabled(false);
+        manager = getSupportFragmentManager();
+        main = new MainFragment();
+        setUpFragment();
 
     }
 
-    public void setCurrentItem(int i){
-        vpBase.setCurrentItem(i);
+    private void setUpFragment(){
+        manager.beginTransaction().add(R.id.replaced,main,"Main View Fragment").commit();
+        currentFragment = main;
     }
 
-    private void setUpViewPager(ViewPager vp){
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        MainFragment main = new MainFragment();
-        AuthFragment auth = new AuthFragment();
-
-        adapter.addFragment(main , "Main");
-        adapter.addFragment(auth, "Auth");
-
-        vp.setAdapter(adapter);
+    public void reloadFragmnet(){
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.detach(currentFragment);
+        transaction.attach(currentFragment);
+        transaction.commit();
     }
 
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
+    public void  replaceFragment(Fragment fragment,String tag){
+        manager.beginTransaction().replace(R.id.replaced, fragment,tag).commit();
+        currentFragment = fragment;
     }
+
+
+//    public int getStatusBarHeight() {
+//        int result = 0;
+//        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+//        if (resourceId > 0) {
+//            result = getResources().getDimensionPixelSize(resourceId);
+//        }
+//        return result;
+//    }
 
     @Override
     public void onBackPressed() {
-        if (vpBase.getCurrentItem()==1){
-            backTo();
+        if(currentFragment == main){
+            super.onBackPressed();
         } else {
-
+            replaceFragment(main,"Main View Fragment");
+            setUpToolbar();
         }
     }
 
-    private void backTo(){
-        vpBase.setCurrentItem(0);
+    public void setUpToolbar(){
         toolbar.setTitle(R.string.app_name);
-
-
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
@@ -118,5 +112,4 @@ public class MainActivity extends AppCompatActivity {
             Log.d("CHECK_ADMIN","onCreate: Admin Already Registered");
         }
     }
-
 }

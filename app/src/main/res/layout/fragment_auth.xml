@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_bg"
     android:padding="16dp"
+    android:paddingTop="?attr/actionBarSize"
     tools:context=".fragment.AuthFragment">
 
     <LinearLayout

@@ -1,5 +1,6 @@
 package com.teamtf.portalamikom.handler;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -78,34 +79,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cv.put(USER_ADDRESS, address);
 
         long ins = db.insert(TABLE_USER, null, cv);
-        if (ins == -1) return false;
-        else return true;
+        return ins != -1;
     }
 
     public boolean cekId(String userid){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_USER+" WHERE "+USER_ID+"=?",new String[]{userid});
-        if (cursor.getCount()>0) return false;
-        else return true;
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_USER+" WHERE "+USER_ID+"=?",new String[]{userid});
+        return cursor.getCount() <= 0;
     }
 
     public boolean authUser(String userid, String password){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_USER+" WHERE "+USER_ID+"=? AND "+USER_PASS+"=?", new String[]{userid,password});
-        if (cursor.getCount()>0) return true;
-        else return false;
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_USER+" WHERE "+USER_ID+"=? AND "+USER_PASS+"=?", new String[]{userid,password});
+        return cursor.getCount() > 0;
     }
 
     public UserModel getUserData(String userid, String password){
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_USER+" WHERE "+USER_ID+"=? AND "+USER_PASS+"=?", new String[]{userid,password});
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_USER+" WHERE "+USER_ID+"=? AND "+USER_PASS+"=?", new String[]{userid,password});
 
         if (cursor != null)
             cursor.moveToFirst();
 
-        UserModel user = new UserModel(cursor.getString(0),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5));
+        assert cursor != null;
 
-        return user;
+        return new UserModel(cursor.getString(0),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5));
     }
 }

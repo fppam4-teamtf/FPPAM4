@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -24,30 +25,30 @@ import com.teamtf.portalamikom.adapter.ViewPagerAdapter;
  */
 public class MainFragment extends Fragment {
 
-    SharedPreferences prefs;
-
-    private MainActivity context;
+    private SharedPreferences prefs;
     private ActionBar toolbar;
     private ViewPager vpMain;
     private BottomNavigationView bnvMain;
+    private ViewPagerAdapter adapter;
 
     public MainFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_main, container, false);
 
-        prefs = getContext().getSharedPreferences("login", getContext().MODE_PRIVATE);
-        context = (MainActivity) getActivity();
-        toolbar = context.getSupportActionBar();
+        prefs = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+
+        toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
         vpMain = v.findViewById(R.id.vp_main);
-        vpMain.setOffscreenPageLimit(3);
-        setUpViewPager(vpMain);
+
+        adapter = new ViewPagerAdapter(getChildFragmentManager());
+
+        setUpViewPager();
 
         bnvMain = v.findViewById(R.id.bnv_main);
         bnvMain.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -82,6 +83,11 @@ public class MainFragment extends Fragment {
 
                 bnvMain.getMenu().getItem(position).setChecked(false);
 
+                Fragment fragment = adapter.getFragment(position);
+                if (fragment != null) {
+                    fragment.onResume();
+                }
+
                 if(position == 2){
                     if(!prefs.getBoolean("isLogin", false)){
                         showAuth();
@@ -100,27 +106,25 @@ public class MainFragment extends Fragment {
         return v;
     }
 
-
     private void showAuth(){
-        context.setCurrentItem(1);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        assert mainActivity != null;
+        AuthFragment auth = new AuthFragment();
+        mainActivity.replaceFragment(auth,"Auth View Fragment");
 
         toolbar.setTitle(R.string.login);
         toolbar.setDisplayHomeAsUpEnabled(true);
         toolbar.setDisplayShowHomeEnabled(true);
     }
 
-    private void setUpViewPager(ViewPager vp){
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+    public void setUpViewPager(){
 
-        EventsFragment event = new EventsFragment();
-        NewsFragment berita = new NewsFragment();
-        AccountFragment akun = new AccountFragment();
+        adapter.addFragment(EventsFragment.newInstance(), "Event");
+        adapter.addFragment(NewsFragment.newInstance(), "Berita");
+        adapter.addFragment(AccountFragment.newInstance(), "Akun");
 
-        adapter.addFragment(event , "Event");
-        adapter.addFragment(berita, "Berita");
-        adapter.addFragment(akun, "Akun");
-
-        vp.setAdapter(adapter);
+        vpMain.setOffscreenPageLimit(1);
+        vpMain.setAdapter(adapter);
     }
 
 }
