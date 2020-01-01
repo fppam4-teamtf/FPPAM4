@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Portal Amikom</string>
+    <string name="app_name">Portal Event Amikom</string>
 
     <!-- Start Dummy String -->
     <string name="loream_ipsum">
@@ -131,6 +131,12 @@
     <string name="yes">Ya</string>
     <string name="no">Tidak</string>
     <string name="quest_sure">Anda yakin?</string>
+    <string name="add_event">Tambah Event</string>
+    <string name="add_news">Tambah Berita</string>
+    <string name="title">Judul</string>
+    <string name="news_content">Isi Berita</string>
+    <string name="add">Tambahkan</string>
+    <string name="event_desc">Deskripsi Event</string>
 
     <!-- End Dummy String -->
 </resources>

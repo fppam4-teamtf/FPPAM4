@@ -3,116 +3,132 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_bg"
-    android:padding="16dp"
+    android:background="@color/white"
     android:paddingTop="?attr/actionBarSize"
     tools:context=".fragment.AuthFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal|center_vertical"
-            android:layout_marginBottom="16dp">
-            <ImageView
-                android:id="@+id/iv_logo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/logo_amikom_full_color" />
-            <TextView
-                android:id="@+id/tv_amikom"
-                android:layout_width="wrap_content"
+            android:padding="16dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_toRightOf="@id/iv_logo"
-                android:text="Amikom"
-                android:textSize="16sp"/>
+                android:layout_marginBottom="16dp"
+                android:gravity="center_horizontal|center_vertical">
+
+                <ImageView
+                    android:id="@+id/iv_logo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/logo_amikom_full_color" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_amikom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="Amikom"
+                        android:fontFamily="@font/segoe_ui"
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="-8dp"
+                        android:text="PORTAL"
+                        android:fontFamily="@font/segoe_ui"
+                        android:textSize="56sp" />
+                </LinearLayout>
+            </LinearLayout>
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_below="@id/tv_amikom"
-                android:layout_toRightOf="@+id/iv_logo"
-                android:text="PORTAL"
-                android:layout_marginTop="-16dp"
-                android:textSize="56sp" />
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp"
+                android:text="Silahkan login untuk mengakses akun anda"
+                android:fontFamily="@font/segoe_ui"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
 
-        </RelativeLayout>
+            <EditText
+                android:id="@+id/et_userid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/light_ed"
+                android:hint="User ID"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp"
+                android:fontFamily="@font/segoe_ui"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp"
-            android:text="Silahkan login untuk mengakses akun anda"
-            android:textColor="@color/light_ed"
-            android:textSize="16sp" />
+            <EditText
+                android:id="@+id/et_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/light_ed"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp"
+                android:fontFamily="@font/segoe_ui"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/et_userid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="@color/light_ed"
-            android:hint="User ID"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/colorPrimaryDark"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp"
+                android:text="@string/login"
+                android:fontFamily="@font/segoe_ui"
+                android:textColor="@color/light_ed"
+                android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/et_pass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="@color/light_ed"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@color/colorPrimaryDark"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp"
-            android:text="@string/login"
-            android:textColor="@color/light_ed"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp"
-            android:text="Lupa Password ?"
-            android:textColor="@color/colorAccent"
-            android:textSize="12sp" />
-    </LinearLayout>
-
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="8dp"
+                android:text="Lupa Password ?"
+                android:fontFamily="@font/segoe_ui"
+                android:textColor="@color/colorAccent"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>
