@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private FragmentManager manager;
-    private MainFragment main;
     private Fragment currentFragment;
 
     public MainActivity() {
@@ -51,14 +50,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         manager = getSupportFragmentManager();
-        main = new MainFragment();
         setUpFragment();
 
     }
 
     private void setUpFragment(){
-        manager.beginTransaction().add(R.id.replaced,main,"Main View Fragment").commit();
-        currentFragment = main;
+        manager.beginTransaction().add(R.id.replaced,MainFragment.newInstance(),getString(R.string.tag_main_fragment)).commit();
+        currentFragment = MainFragment.newInstance();
     }
 
     public void reloadFragmnet(){
@@ -85,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(currentFragment == main){
+        if(currentFragment.equals(MainFragment.newInstance())){
             super.onBackPressed();
         } else {
-            replaceFragment(main,"Main View Fragment");
+            replaceFragment(MainFragment.newInstance(),getString(R.string.tag_main_fragment));
             setUpToolbar();
         }
     }

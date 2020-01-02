@@ -29,11 +29,17 @@ public class AuthFragment extends Fragment {
     private DatabaseHandler dbHandler;
     private SharedPreferences prefs;
 
+    private MainActivity main;
+
     private EditText etUserId;
     private EditText etPassword;
 
     public AuthFragment() {
         // Required empty public constructor
+    }
+
+    public static AuthFragment newInstance(){
+        return new AuthFragment();
     }
 
     @Override
@@ -43,6 +49,8 @@ public class AuthFragment extends Fragment {
 
         dbHandler = new DatabaseHandler(getContext());
         prefs = getContext().getSharedPreferences("login", getContext().MODE_PRIVATE);
+
+        main = (MainActivity) getActivity();
 
         etUserId = v.findViewById(R.id.et_userid);
         etPassword = v.findViewById(R.id.et_pass);
@@ -75,11 +83,10 @@ public class AuthFragment extends Fragment {
 
                         Log.d("TRY_SHARED_PREFERENCES", "onClick: " + prefs.getAll());
 
-                        MainActivity mainActivity = (MainActivity) getActivity();
-                        assert mainActivity != null;
-                        MainFragment main = new MainFragment();
-                        mainActivity.replaceFragment(main,"Main View Fragment");
-                        mainActivity.setUpToolbar();
+
+                        assert main != null;
+                        main.replaceFragment(MainFragment.newInstance(),getString(R.string.tag_main_fragment));
+                        main.setUpToolbar();
                     } else {
                         Toast.makeText(getContext(), "User Id atau Password tidak dikenali, Silahkan coba lagi.", Toast.LENGTH_SHORT).show();
                     }

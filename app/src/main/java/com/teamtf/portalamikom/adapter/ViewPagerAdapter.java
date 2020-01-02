@@ -66,11 +66,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         titleList.add(title);
     }
 
-    public void emptyFragment(){
-        fmtList.clear();
-        titleList.clear();
-    }
-
     public Fragment getFragment(int position){
         Fragment fmt = null;
         String tag = fragmentTags.get(position);

@@ -1,8 +1,6 @@
 package com.teamtf.portalamikom.fragment;
 
-import android.animation.Animator;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,16 +9,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.teamtf.portalamikom.AddEventActivity;
@@ -36,6 +32,9 @@ public class AccountFragment extends Fragment{
     private SharedPreferences prefs;
 
     private MainActivity main;
+    private MainFragment mainFragment;
+
+    private ActionBar actionBar;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -57,9 +56,13 @@ public class AccountFragment extends Fragment{
 
         prefs = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
 
-        RelativeLayout relativeLayout = v.findViewById(R.id.rl_fmt_account);
+//        RelativeLayout relativeLayout = v.findViewById(R.id.rl_fmt_account);
 
         main = (MainActivity) getActivity();
+        assert main != null;
+        actionBar = main.getSupportActionBar();
+
+        mainFragment = new MainFragment();
 
         TextView tvUserId = v.findViewById(R.id.tv_userid);
         TextView tvUserName = v.findViewById(R.id.tv_nama);
@@ -97,9 +100,9 @@ public class AccountFragment extends Fragment{
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);
-                builder.setTitle("LOGOUT");
-                builder.setMessage("Anda Yakin?");
-                builder.setPositiveButton(getActivity().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                builder.setTitle(getString(R.string.logout));
+                builder.setMessage(getString(R.string.quest_sure));
+                builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreferences.Editor editor = prefs.edit();
@@ -107,10 +110,14 @@ public class AccountFragment extends Fragment{
                         editor.clear();
                         editor.apply();
 
-                        main.reloadFragmnet();
+                        main.replaceFragment(AuthFragment.newInstance(),getString(R.string.tag_auth_fragment));
+
+                        actionBar.setTitle(R.string.login);
+                        actionBar.setDisplayHomeAsUpEnabled(true);
+                        actionBar.setDisplayShowHomeEnabled(true);
                     }
                 });
-                builder.setNegativeButton(getActivity().getString(R.string.no), new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

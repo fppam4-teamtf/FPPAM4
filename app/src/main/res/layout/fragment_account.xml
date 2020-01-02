@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/segoe_ui"
                         android:textStyle="bold"
-                        android:text="Tambah Berita" />
+                        android:text="@string/add_news" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -119,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/segoe_ui"
                         android:textStyle="bold"
-                        android:text="Tambah Event" />
+                        android:text="@string/add_event" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -132,8 +132,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="4dp"
                 android:background="@color/grey"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:text="LOGOUT"
+                android:text="@string/logout"
                 android:textColor="@color/light_ed" />
         </RelativeLayout>
     </LinearLayout>

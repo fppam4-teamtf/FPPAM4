@@ -123,7 +123,8 @@
     <string name="account">Akun</string>
     <string name="news">Berita</string>
     <string name="event">Event</string>
-    <string name="login">LOGIN</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="value">value</string>
     <string name="address">Alamat :</string>
     <string name="gender">Gender :</string>
@@ -137,6 +138,12 @@
     <string name="news_content">Isi Berita</string>
     <string name="add">Tambahkan</string>
     <string name="event_desc">Deskripsi Event</string>
+    <string name="tag_main_fragment">Main View Fragment</string>
+    <string name="tag_auth_fragment">Auth View Fragment</string>
+    <string name="forget_password">Lupa Password ?</string>
+    <string name="password">Password</string>
+    <string name="user_id">User ID</string>
+    <string name="amikom">Amikom</string>
 
     <!-- End Dummy String -->
 </resources>
