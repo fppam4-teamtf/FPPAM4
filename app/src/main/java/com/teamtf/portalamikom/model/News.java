@@ -1,16 +1,27 @@
 package com.teamtf.portalamikom.model;
 
-public class NewsModel {
+public class News {
 
-    private String title, date, content, publisher;
-    private final int imgResource;
+    private int id;
+    private String category, title, date, content, publisher, imgResource;
+//    private final int imgResource;
 
-    public NewsModel(String title, String date, String content, String publisher, int imgResource) {
+    public News(int id, String category, String title, String date, String content, String publisher, String imgResource) {
+        this.id = id;
+        this.category = category;
         this.title = title;
         this.date = date;
         this.content = content;
         this.publisher = publisher;
         this.imgResource = imgResource;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public String getTitle() {
@@ -25,7 +36,7 @@ public class NewsModel {
         return content;
     }
 
-    public int getImgResource() {
+    public String getImgResource() {
         return imgResource;
     }
 

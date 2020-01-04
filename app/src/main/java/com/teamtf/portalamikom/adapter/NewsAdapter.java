@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.teamtf.portalamikom.R;
-import com.teamtf.portalamikom.model.NewsModel;
+import com.teamtf.portalamikom.model.News;
 
 import java.util.ArrayList;
 
 public class NewsAdapter {
 
-    private ArrayList<NewsModel> dataInformasi;
+    private ArrayList<News> dataInformasi;
     private Context context;
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -35,7 +35,13 @@ public class NewsAdapter {
 //            itemView.setOnClickListener(this);
         }
 
-        void bindTo(NewsModel currentInfo){
+        public ViewHolder(@NonNull View itemView, TextView tvTitle, TextView tvDate) {
+            super(itemView);
+            this.tvTitle = tvTitle;
+            this.tvDate = tvDate;
+        }
+
+        void bindTo(News currentInfo){
             tvTitle.setText(currentInfo.getTitle());
             tvDate.setText(currentInfo.getDate());
             Glide.with(context).load(currentInfo.getImgResource()).into(ivInfo);
@@ -43,7 +49,7 @@ public class NewsAdapter {
 
         @Override
         public void onClick(View v) {
-            NewsModel currentInfo = dataInformasi.get(getAdapterPosition());
+            News currentInfo = dataInformasi.get(getAdapterPosition());
 
 //            Intent previewInfo = new Intent(context,PreviewInfoActivity.class);
 

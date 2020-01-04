@@ -19,20 +19,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.teamtf.portalamikom.AddEventActivity;
 import com.teamtf.portalamikom.AddNewsActivity;
 import com.teamtf.portalamikom.MainActivity;
+import com.teamtf.portalamikom.NewsListActivity;
 import com.teamtf.portalamikom.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccountFragment extends Fragment{
+public class AccountFragment extends Fragment implements View.OnClickListener {
 
     private SharedPreferences prefs;
 
     private MainActivity main;
-    private MainFragment mainFragment;
 
     private ActionBar actionBar;
 
@@ -40,7 +39,7 @@ public class AccountFragment extends Fragment{
         // Required empty public constructor
     }
 
-    public static AccountFragment newInstance(){
+    public static AccountFragment newInstance() {
         return new AccountFragment();
     }
 
@@ -56,48 +55,63 @@ public class AccountFragment extends Fragment{
 
         prefs = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
 
-//        RelativeLayout relativeLayout = v.findViewById(R.id.rl_fmt_account);
-
         main = (MainActivity) getActivity();
         assert main != null;
         actionBar = main.getSupportActionBar();
-
-        mainFragment = new MainFragment();
 
         TextView tvUserId = v.findViewById(R.id.tv_userid);
         TextView tvUserName = v.findViewById(R.id.tv_nama);
 //        TextView tvGender = v.findViewById(R.id.tv_gender);
 //        TextView tvAddress = v.findViewById(R.id.tv_address);
 
-        if (!prefs.getAll().isEmpty()){
-            tvUserId.setText(prefs.getString("userid","value"));
-            tvUserName.setText(prefs.getString("name","value"));
+        if (!prefs.getAll().isEmpty()) {
+            tvUserId.setText(prefs.getString("userid", "value"));
+            tvUserName.setText(prefs.getString("name", "value"));
 //            tvGender.setText(prefs.getString("gender","value"));
 //            tvAddress.setText(prefs.getString("address","value"));
         }
 
+        CardView cvContentList = v.findViewById(R.id.cv_content_list);
+        cvContentList.setOnClickListener(this);
         CardView cvAddNews = v.findViewById(R.id.cv_add_news);
-        cvAddNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), AddNewsActivity.class);
-                startActivity(i);
-            }
-        });
-
+        cvAddNews.setOnClickListener(this);
         CardView cvAddEvent = v.findViewById(R.id.cv_add_event);
-        cvAddEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), AddEventActivity.class);
-                startActivity(i);
-            }
-        });
-
+        cvAddEvent.setOnClickListener(this);
         Button btnLogout = v.findViewById(R.id.btn_logout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnLogout.setOnClickListener(this);
+
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent i;
+        switch (v.getId()) {
+            case R.id.cv_content_list:
+                i = new Intent(getActivity(), NewsListActivity.class);
+                startActivity(i);
+                break;
+            case R.id.cv_add_news:
+                i = new Intent(getActivity(), AddNewsActivity.class);
+                i.putExtra("Category","Berita");
+                startActivity(i);
+                break;
+            case R.id.cv_add_event:
+                i = new Intent(getActivity(), AddNewsActivity.class);
+                i.putExtra("Category","Event");
+                startActivity(i);
+                break;
+            case R.id.btn_logout:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);
                 builder.setTitle(getString(R.string.logout));
@@ -110,7 +124,7 @@ public class AccountFragment extends Fragment{
                         editor.clear();
                         editor.apply();
 
-                        main.replaceFragment(AuthFragment.newInstance(),getString(R.string.tag_auth_fragment));
+                        main.replaceFragment(AuthFragment.newInstance(), getString(R.string.tag_auth_fragment));
 
                         actionBar.setTitle(R.string.login);
                         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -126,20 +140,9 @@ public class AccountFragment extends Fragment{
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
-            }
-        });
-
-        return v;
+                break;
+            default:
+                break;
+        }
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-    }
-
 }

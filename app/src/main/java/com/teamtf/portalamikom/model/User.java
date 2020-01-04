@@ -1,14 +1,14 @@
 package com.teamtf.portalamikom.model;
 
-public class UserModel {
+public class User {
 
     private String userid, privilages, name, gender, address;
 
-    public UserModel() {
+    public User() {
 
     }
 
-    public UserModel(String userid, String privilages, String name, String gender, String address) {
+    public User(String userid, String privilages, String name, String gender, String address) {
         this.userid = userid;
         this.privilages = privilages;
         this.name = name;

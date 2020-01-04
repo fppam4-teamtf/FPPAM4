@@ -94,7 +94,12 @@
     <string name="information_title">Information Title</string>
     <string name="information_date">14 Dec 2019</string>
 
-    <string-array name="info_kampus_titles">
+    <string-array name="news_category">
+        <item>Berita</item>
+        <item>Event</item>
+    </string-array>
+
+    <string-array name="dummy_title">
         <item>Informasi Kampus 1</item>
         <item>Informasi Kampus 2</item>
         <item>Informasi Kampus 3</item>
@@ -102,7 +107,7 @@
         <item>Informasi Kampus 5</item>
     </string-array>
 
-    <string-array name="info_kampus_info">
+    <string-array name="dummy_desc">
         <item>Ini adalah isi Informasi Kampus 1</item>
         <item>Ini adalah isi Informasi Kampus 2</item>
         <item>Ini adalah isi Informasi Kampus 3</item>
@@ -136,7 +141,7 @@
     <string name="add_news">Tambah Berita</string>
     <string name="title">Judul</string>
     <string name="news_content">Isi Berita</string>
-    <string name="add">Tambahkan</string>
+    <string name="add">Tambah</string>
     <string name="event_desc">Deskripsi Event</string>
     <string name="tag_main_fragment">Main View Fragment</string>
     <string name="tag_auth_fragment">Auth View Fragment</string>
@@ -144,6 +149,9 @@
     <string name="password">Password</string>
     <string name="user_id">User ID</string>
     <string name="amikom">Amikom</string>
+    <string name="find">Cari</string>
+    <string name="content_list">Daftar Content</string>
+    <string name="category">Category</string>
 
     <!-- End Dummy String -->
 </resources>

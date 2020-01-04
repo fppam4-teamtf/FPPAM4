@@ -10,19 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".AddEventActivity"
-            android:label="@string/add_event"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            android:name=".NewsListActivity"
+            android:label="@string/content_list"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".AddNewsActivity"
-            android:label="@string/add_news"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

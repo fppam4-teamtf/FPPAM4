@@ -1,10 +1,8 @@
 package com.teamtf.portalamikom.fragment;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -14,12 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.teamtf.portalamikom.MainActivity;
 import com.teamtf.portalamikom.R;
 import com.teamtf.portalamikom.handler.DatabaseHandler;
-import com.teamtf.portalamikom.model.UserModel;
+import com.teamtf.portalamikom.model.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,7 +67,7 @@ public class AuthFragment extends Fragment {
                         Toast.makeText(getContext(), "Login Sukses", Toast.LENGTH_SHORT).show();
                         SharedPreferences.Editor editor = prefs.edit();
 
-                        UserModel user = dbHandler.getUserData(id, pass);
+                        User user = dbHandler.getUserData(id, pass);
 
                         editor.putBoolean("isLogin", true);
                         editor.putString("userid", user.getUserid());
