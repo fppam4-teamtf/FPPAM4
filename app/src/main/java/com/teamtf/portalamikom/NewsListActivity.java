@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,17 +18,12 @@ import android.widget.Spinner;
 
 import com.teamtf.portalamikom.adapter.NewsListAdapter;
 import com.teamtf.portalamikom.handler.DatabaseHandler;
-import com.teamtf.portalamikom.model.NewsList;
-
-import java.util.ArrayList;
 
 public class NewsListActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private DatabaseHandler dbHandler;
     private RecyclerView rvNewsList;
-    private Spinner categorySpinner;
     private AlertDialog dialog;
-    private ArrayList<NewsList> newsData;
     private NewsListAdapter adapter;
 
     @Override
@@ -43,7 +39,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         ArrayAdapter<CharSequence> spinnerArrayAdapter = ArrayAdapter.createFromResource(this, R.array.news_category, R.layout.support_simple_spinner_dropdown_item);
         spinnerArrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
 
-        categorySpinner = findViewById(R.id.sp_category);
+        Spinner categorySpinner = findViewById(R.id.sp_category);
         categorySpinner.setAdapter(spinnerArrayAdapter);
         categorySpinner.setOnItemSelectedListener(this);
 
@@ -60,8 +56,6 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
         cvAdd.setOnClickListener(this);
         dialog = new AlertDialog.Builder(this).create();
 
-        newsData = new ArrayList<NewsList>();
-
         rvNewsList.setAdapter(adapter);
         Log.d("NOTAG", "onCreateView: here data initialized");
 
@@ -73,7 +67,7 @@ public class NewsListActivity extends AppCompatActivity implements View.OnClickL
 
         switch (v.getId()){
             case R.id.cv_add:
-                View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_content, null);
+                @SuppressLint("InflateParams") View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_content, null);
                 dialog.setView(view);
                 dialog.setTitle(getString(R.string.add));
                 dialog.show();

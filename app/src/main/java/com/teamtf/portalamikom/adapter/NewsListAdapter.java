@@ -1,6 +1,7 @@
 package com.teamtf.portalamikom.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.teamtf.portalamikom.PreviewActivity;
 import com.teamtf.portalamikom.R;
 import com.teamtf.portalamikom.model.NewsList;
 
@@ -45,7 +47,9 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private TextView number, tvTitle, tvDate;
+        private TextView number;
+        private TextView tvTitle;
+        private TextView tvDate;
 
         private ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,9 +64,12 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
 
         @Override
         public void onClick(View itemView) {
-
             NewsList currentNewsData = newsData.get(getAdapterPosition());
             Log.d("News Data", "onClick: itemview = "+currentNewsData);
+
+            Intent i = new Intent(context, PreviewActivity.class);
+            i.putExtra("id",currentNewsData.getId());
+            context.startActivity(i);
         }
 
         private void bindTo(NewsList currentNewsData) {
@@ -70,7 +77,5 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             tvTitle.setText(currentNewsData.getTitle());
             tvDate.setText(currentNewsData.getDate());
         }
-
-
     }
 }
