@@ -3,10 +3,13 @@ package com.teamtf.portalamikom.fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -48,6 +51,8 @@ public class AuthFragment extends Fragment {
         prefs = getContext().getSharedPreferences("login", getContext().MODE_PRIVATE);
 
         main = (MainActivity) getActivity();
+        ActionBar actionBar = main.getSupportActionBar();
+        actionBar.hide();
 
         etUserId = v.findViewById(R.id.et_userid);
         etPassword = v.findViewById(R.id.et_pass);
@@ -83,7 +88,7 @@ public class AuthFragment extends Fragment {
 
                         assert main != null;
                         main.replaceFragment(MainFragment.newInstance(),getString(R.string.tag_main_fragment));
-                        main.setUpToolbar();
+                        main.setUpToolbar(getString(R.string.home));
                     } else {
                         Toast.makeText(getContext(), "User Id atau Password tidak dikenali, Silahkan coba lagi.", Toast.LENGTH_SHORT).show();
                     }

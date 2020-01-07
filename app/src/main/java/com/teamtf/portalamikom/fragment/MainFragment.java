@@ -27,7 +27,6 @@ public class MainFragment extends Fragment implements BottomNavigationView.OnNav
 
     private SharedPreferences prefs;
     private MainActivity main;
-    private ActionBar actionBar;
     private ViewPager vpMain;
     private BottomNavigationView bnvMain;
     private ViewPagerAdapter adapter;
@@ -42,16 +41,14 @@ public class MainFragment extends Fragment implements BottomNavigationView.OnNav
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_main, container, false);
 
         prefs = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
         main = (MainActivity) getActivity();
-        assert main != null;
-        actionBar = main.getSupportActionBar();
 
         vpMain = v.findViewById(R.id.vp_main);
         adapter = new ViewPagerAdapter(getChildFragmentManager());
+        vpMain.setOnPageChangeListener(this);
         setUpViewPager();
 
         bnvMain = v.findViewById(R.id.bnv_main);
@@ -71,7 +68,7 @@ public class MainFragment extends Fragment implements BottomNavigationView.OnNav
             case R.id.mi_account:
                 if (!prefs.getBoolean("isLogin", false)) {
                     Log.d("MENU ITEM", "onNavigationItemSelected: 2 1 " + bnvMain.getMenu());
-                    showAuth();
+                    main.replaceFragment(AuthFragment.newInstance(), getString(R.string.tag_auth_fragment));
                     return false;
                 } else {
                     vpMain.setCurrentItem(2);
@@ -92,12 +89,21 @@ public class MainFragment extends Fragment implements BottomNavigationView.OnNav
 
     @Override
     public void onPageSelected(int position) {
+        Log.d("POSITION", "onPageSelected: " + position);
         bnvMain.getMenu().getItem(position).setChecked(true);
         Log.d("ITEM POSITION", "onPageSelected: " + bnvMain.getMenu().getItem(position));
 
         Fragment fragment = adapter.getFragment(position);
         if (fragment != null) {
             fragment.onResume();
+        }
+
+        if (position == 0){
+            main.setUpToolbar(getString(R.string.event));
+        } else if (position == 1){
+            main.setUpToolbar(getString(R.string.home));
+        } else if (position == 2){
+            main.setUpToolbar(getString(R.string.profile));
         }
     }
 
@@ -109,23 +115,15 @@ public class MainFragment extends Fragment implements BottomNavigationView.OnNav
     private void setUpViewPager() {
 
         if (!prefs.getBoolean("isLogin", false)) {
-            adapter.addFragment(EventsFragment.newInstance(), getString(R.string.event));
-            adapter.addFragment(NewsFragment.newInstance(), getString(R.string.news));
+            adapter.addFragment(EventsFragment.newInstance(), getString(R.string.tag_event_fragment));
+            adapter.addFragment(NewsFragment.newInstance(), getString(R.string.tag_news_fragment));
         } else {
-            adapter.addFragment(EventsFragment.newInstance(), getString(R.string.event));
-            adapter.addFragment(NewsFragment.newInstance(), getString(R.string.news));
-            adapter.addFragment(AccountFragment.newInstance(), getString(R.string.account));
+            adapter.addFragment(EventsFragment.newInstance(), getString(R.string.tag_event_fragment));
+            adapter.addFragment(NewsFragment.newInstance(), getString(R.string.tag_news_fragment));
+            adapter.addFragment(AccountFragment.newInstance(), getString(R.string.tag_account_fragment));
         }
 
         vpMain.setOffscreenPageLimit(3);
         vpMain.setAdapter(adapter);
-    }
-
-    private void showAuth() {
-        main.replaceFragment(AuthFragment.newInstance(), getString(R.string.tag_auth_fragment));
-
-        actionBar.setTitle(R.string.login);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
     }
 }
