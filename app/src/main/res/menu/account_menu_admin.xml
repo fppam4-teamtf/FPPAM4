@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_admin_panel"
+        android:orderInCategory="100"
+        android:title="Admin Panel"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_update_profile"
+        android:orderInCategory="100"
+        android:title="Ubah Profil"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_change_password"
+        android:orderInCategory="100"
+        android:title="Ubah Password"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="Log out"
+        app:showAsAction="never" />
+</menu>
