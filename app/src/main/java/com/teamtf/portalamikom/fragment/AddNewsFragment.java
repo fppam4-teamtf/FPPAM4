@@ -99,7 +99,11 @@ public class AddNewsFragment extends Fragment implements View.OnClickListener {
             Boolean addNews = dbHandler.addNews(category,title,content,"image", prefs.getString("userid",getString(R.string.value)));
             if (addNews.equals(true)){
                 Toast.makeText(getActivity(),category+" berhasil ditambahkan.",Toast.LENGTH_SHORT).show();
-                bundle.putInt("position",1);
+                if (category.equals(getString(R.string.news))){
+                    bundle.putInt("position",0);
+                } else if (category.equals(getString(R.string.event))){
+                    bundle.putInt("position",1);
+                }
                 newsList.setArguments(bundle);
                 adminPanel.replaceFragment(newsList,getString(R.string.tag_news_list_fragment));
                 adminPanel.setUpToolbar(getString(R.string.content_list));

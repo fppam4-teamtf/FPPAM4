@@ -1,6 +1,6 @@
 package com.teamtf.portalamikom;
 
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -18,7 +18,7 @@ public class PreviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_preview);
 
         setSupportActionBar(toolbar);
 
@@ -31,9 +31,10 @@ public class PreviewActivity extends AppCompatActivity {
             }
         });
 
-        Intent i = getIntent();
-        Log.d("PREVIEW", "onCreate: "+i.getStringExtra("id"));
-        getSupportActionBar().setTitle(String.valueOf(i.getIntExtra(("id"),0)));
+        Log.d("PREVIEW", "onCreate: "+getIntent().getIntExtra("id",0));
+        getSupportActionBar().setTitle(String.valueOf(getIntent().getIntExtra("id",0)));
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        Log.d("TITLE", "onCreate: "+getSupportActionBar().getTitle());
 
     }
 }

@@ -65,7 +65,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         @Override
         public void onClick(View itemView) {
             NewsList currentNewsData = newsData.get(getAdapterPosition());
-            Log.d("News Data", "onClick: itemview = "+currentNewsData);
+            Log.d("News Data", "onClick: itemview = "+currentNewsData.getId());
 
             Intent i = new Intent(context, PreviewActivity.class);
             i.putExtra("id",currentNewsData.getId());
