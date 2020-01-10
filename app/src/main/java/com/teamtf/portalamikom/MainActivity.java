@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("login", Context.MODE_PRIVATE);
 
         setUpAdmin();
+        setUpManolija();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -110,6 +111,20 @@ public class MainActivity extends AppCompatActivity {
         Boolean cekId = dbHelper.cekId("admin");
         if (cekId.equals(true)) {
             Boolean addAdmin = dbHelper.addUser("admin", "admin", "admin", "Administrator", "None", "Office");
+            if (addAdmin.equals(true)) {
+                Log.d("SETUP_ADMIN", "onCreate: Admin Successfully Registeres");
+            } else {
+                Log.d("SETUP_ADMIN", "onCreate: Admin Registration Failed");
+            }
+        } else {
+            Log.d("CHECK_ADMIN", "onCreate: Admin Already Registered");
+        }
+    }
+
+    private void setUpManolija() {
+        Boolean cekId = dbHelper.cekId("19.21.1389");
+        if (cekId.equals(true)) {
+            Boolean addAdmin = dbHelper.addUser("19.21.1389", "admin", "S1 Informatika", "Widi Riawan Manolija", "Laki-Laki", "Office");
             if (addAdmin.equals(true)) {
                 Log.d("SETUP_ADMIN", "onCreate: Admin Successfully Registeres");
             } else {

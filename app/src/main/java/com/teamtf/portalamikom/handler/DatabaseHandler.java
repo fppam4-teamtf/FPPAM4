@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.teamtf.portalamikom.model.NewsList;
 import com.teamtf.portalamikom.model.News;
+import com.teamtf.portalamikom.model.NewsListHome;
 import com.teamtf.portalamikom.model.User;
 
 import java.text.DateFormat;
@@ -164,6 +165,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 SimpleDateFormat getformat = new SimpleDateFormat("dd MMM yyyy, HH.mm",Locale.getDefault());
                 String dateString = getformat.format(date);
                 data.add(new NewsList(id,title,dateString));
+            }
+        }
+        return data;
+    }
+
+    public ArrayList<NewsListHome> getNewsListHomeData(String category){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT "+NEWS_ID+", "+NEWS_TITLE+", "+NEWS_DATE+", "+NEWS_IMAGE+" FROM "+TABLE_NEWS+" WHERE "+NEWS_CATEGORY+"=?",new String[]{category});
+        ArrayList<NewsListHome> data = new ArrayList<NewsListHome>();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
+        if (cursor != null){
+            while (cursor.moveToNext()){
+                int id = cursor.getInt(cursor.getColumnIndex(NEWS_ID));
+                String title = cursor.getString(cursor.getColumnIndex(NEWS_TITLE));
+                String dateDb = cursor.getString(cursor.getColumnIndex(NEWS_DATE));
+                Date date = new Date();
+                try {
+                    date = format.parse(dateDb);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                SimpleDateFormat getformat = new SimpleDateFormat("dd MMM yyyy, HH.mm",Locale.getDefault());
+                String dateString = getformat.format(date);
+                byte[] imgByte = cursor.getBlob(cursor.getColumnIndex(NEWS_IMAGE));
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imgByte,0,imgByte.length);
+                data.add(new NewsListHome(id,title,dateString,bitmap));
+                Log.d("ID", "getNewsListHomeData: "+id);
             }
         }
         return data;

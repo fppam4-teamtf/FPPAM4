@@ -75,16 +75,16 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         Bitmap bitmap = news.getImgResource();
         ivPreview.setImageBitmap(bitmap);
 
-        if (!prefs.getBoolean("isLogin", false) && !prefs.getString("privilages", "").equals("admin")) {
-            fabEdit.setEnabled(false);
-            fabEdit.hide();
-            fabDelete.setEnabled(false);
-            fabDelete.hide();
-        } else {
+        if (prefs.getString("privilages", "").equals("admin")) {
             fabEdit.setOnClickListener(this);
             fabEdit.show();
             fabDelete.setOnClickListener(this);
             fabDelete.show();
+        } else {
+            fabEdit.setEnabled(false);
+            fabEdit.hide();
+            fabDelete.setEnabled(false);
+            fabDelete.hide();
         }
     }
 
