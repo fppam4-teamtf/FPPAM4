@@ -25,7 +25,6 @@
         </activity>
         <activity
             android:name=".PreviewActivity"
-            android:label="@string/title_activity_preview"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

@@ -51,6 +51,7 @@ public class AuthFragment extends Fragment {
         prefs = getContext().getSharedPreferences("login", getContext().MODE_PRIVATE);
 
         main = (MainActivity) getActivity();
+
         ActionBar actionBar = main.getSupportActionBar();
         actionBar.hide();
 
@@ -87,8 +88,12 @@ public class AuthFragment extends Fragment {
 
 
                         assert main != null;
-                        main.replaceFragment(MainFragment.newInstance(),getString(R.string.tag_main_fragment));
-                        main.setUpToolbar(getString(R.string.home));
+                        MainFragment mainFragment = MainFragment.newInstance();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("position", 2);
+                        mainFragment.setArguments(bundle);
+                        main.onBackPressed();
+                        main.replaceFragment(mainFragment,getString(R.string.tag_main_fragment));
                     } else {
                         Toast.makeText(getContext(), "User Id atau Password tidak dikenali, Silahkan coba lagi.", Toast.LENGTH_SHORT).show();
                     }

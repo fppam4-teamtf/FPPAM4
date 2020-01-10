@@ -35,7 +35,7 @@ public class MainFragment extends Fragment implements BottomNavigationView.OnNav
         // Required empty public constructor
     }
 
-    public static MainFragment newInstance(){
+    public static MainFragment newInstance() {
         return new MainFragment();
     }
 
@@ -53,7 +53,20 @@ public class MainFragment extends Fragment implements BottomNavigationView.OnNav
 
         bnvMain = v.findViewById(R.id.bnv_main);
         bnvMain.setOnNavigationItemSelectedListener(this);
-        bnvMain.setSelectedItemId(R.id.mi_news);
+        if (getArguments() != null) {
+            if (getArguments().getInt("position", 1) == 0) {
+                bnvMain.setSelectedItemId(R.id.mi_events);
+                main.setUpToolbar(getString(R.string.event));
+            } else if (prefs.getBoolean("isLogin", false) && getArguments().getInt("position", 1) == 2) {
+                bnvMain.setSelectedItemId(R.id.mi_account);
+                main.setUpToolbar(getString(R.string.profile));
+            } else {
+                bnvMain.setSelectedItemId(R.id.mi_news);
+                main.setUpToolbar(getString(R.string.home));
+            }
+        } else {
+            bnvMain.setSelectedItemId(R.id.mi_news);
+        }
 
         return v;
     }
@@ -68,7 +81,7 @@ public class MainFragment extends Fragment implements BottomNavigationView.OnNav
             case R.id.mi_account:
                 if (!prefs.getBoolean("isLogin", false)) {
                     Log.d("MENU ITEM", "onNavigationItemSelected: 2 1 " + bnvMain.getMenu());
-                    main.replaceFragment(AuthFragment.newInstance(), getString(R.string.tag_auth_fragment));
+                    main.replaceFragment(AuthFragment.newInstance(), getString(R.string.tag_auth_fragment), getString(R.string.tag_main_fragment));
                     return false;
                 } else {
                     vpMain.setCurrentItem(2);
@@ -90,7 +103,7 @@ public class MainFragment extends Fragment implements BottomNavigationView.OnNav
     @Override
     public void onPageSelected(int position) {
         Log.d("POSITION", "onPageSelected: " + position);
-        bnvMain.getMenu().getItem(position).setChecked(true);
+        bnvMain.getMenu().getItem(position).setChecked(false);
         Log.d("ITEM POSITION", "onPageSelected: " + bnvMain.getMenu().getItem(position));
 
         Fragment fragment = adapter.getFragment(position);
@@ -98,11 +111,11 @@ public class MainFragment extends Fragment implements BottomNavigationView.OnNav
             fragment.onResume();
         }
 
-        if (position == 0){
+        if (position == 0) {
             main.setUpToolbar(getString(R.string.event));
-        } else if (position == 1){
+        } else if (position == 1) {
             main.setUpToolbar(getString(R.string.home));
-        } else if (position == 2){
+        } else if (position == 2) {
             main.setUpToolbar(getString(R.string.profile));
         }
     }

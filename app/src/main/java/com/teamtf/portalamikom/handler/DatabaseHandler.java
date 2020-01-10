@@ -155,9 +155,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return data;
     }
 
-    public News getNewsData(String category){
+    public News getNewsData(int id){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NEWS+" WHERE "+NEWS_CATEGORY+"=?",new String[]{category});
+        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NEWS+" WHERE "+NEWS_ID+"=?",new String[]{String.valueOf(id)});
         if (cursor != null)
             cursor.moveToFirst();
 

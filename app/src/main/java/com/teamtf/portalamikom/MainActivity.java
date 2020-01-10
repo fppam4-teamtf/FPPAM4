@@ -11,7 +11,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.teamtf.portalamikom.fragment.AuthFragment;
 import com.teamtf.portalamikom.fragment.MainFragment;
 import com.teamtf.portalamikom.handler.DatabaseHandler;
 
@@ -19,8 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseHandler dbHelper;
     private SharedPreferences prefs;
-    private Toolbar toolbar;
     private FragmentManager manager;
+    private MainFragment mainFragment;
+    private AuthFragment authFragment;
     private Fragment currentFragment;
 
     public MainActivity() {
@@ -32,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         dbHelper = new DatabaseHandler(this);
-        prefs = getPreferences(Context.MODE_PRIVATE);
+        prefs = getSharedPreferences("login", Context.MODE_PRIVATE);
 
         setUpAdmin();
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -46,52 +49,74 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mainFragment = MainFragment.newInstance();
+        authFragment = AuthFragment.newInstance();
+
         manager = getSupportFragmentManager();
-        manager.beginTransaction().add(R.id.replaced,MainFragment.newInstance(),getString(R.string.tag_main_fragment)).commit();
-        currentFragment = MainFragment.newInstance();
+        Bundle bundle = new Bundle();
+
+        if (getIntent() != null){
+//            manager.popBackStack();
+            bundle.putBoolean("isLogin", prefs.getBoolean("isLogin",false));
+            bundle.putInt("position",getIntent().getIntExtra("position", 1));
+            mainFragment.setArguments(bundle);
+        } else {
+            bundle.putInt("position",1);
+            mainFragment.setArguments(bundle);
+        }
+
+        manager.beginTransaction().add(R.id.replaced, mainFragment, getString(R.string.tag_main_fragment)).commit();
+        currentFragment = mainFragment;
 
     }
 
     @Override
     public void onBackPressed() {
-        if(currentFragment.equals(MainFragment.newInstance())){
-            super.onBackPressed();
+        if (manager.getBackStackEntryCount()>0) {
+            Log.d("BACKSTACK", "onBackPressed: "+manager.getBackStackEntryCount());
+            manager.popBackStack(getString(R.string.tag_main_fragment),1);
+            Log.d("BACKSTACK", "onBackPressed: "+manager.getBackStackEntryCount());
         } else {
-            replaceFragment(MainFragment.newInstance(),getString(R.string.tag_main_fragment));
-            setUpToolbar(getString(R.string.app_name));
+            Toast.makeText(this, "Super", Toast.LENGTH_SHORT).show();
+            Log.d("BACKSTACK", "onBackPressed: "+manager.getBackStackEntryCount());
         }
     }
 
-    public void reloadFragmnet(){
+    public void reloadFragmnet() {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.detach(currentFragment);
         transaction.attach(currentFragment);
         transaction.commit();
     }
 
-    public void replaceFragment(Fragment fragment,String tag){
-        manager.beginTransaction().replace(R.id.replaced, fragment,tag).commit();
-        currentFragment = fragment;
+    public void replaceFragment(Fragment fragment, String tag) {
+        manager.beginTransaction().replace(R.id.replaced, fragment, tag).commit();
     }
 
-    public void setUpToolbar(String title){
+    public void replaceFragment(Fragment fragment, String tag, String backStackTag) {
+        manager.beginTransaction().replace(R.id.replaced, fragment, tag)
+                .addToBackStack(backStackTag)
+                .commit();
+    }
+
+    public void setUpToolbar(String title) {
         getSupportActionBar().show();
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
-    private void setUpAdmin(){
+    private void setUpAdmin() {
         Boolean cekId = dbHelper.cekId("admin");
-        if (cekId.equals(true)){
-            Boolean addAdmin = dbHelper.addUser("admin","admin","admin","Administrator","None","Office");
-            if (addAdmin.equals(true)){
-                Log.d("SETUP_ADMIN","onCreate: Admin Successfully Registeres");
+        if (cekId.equals(true)) {
+            Boolean addAdmin = dbHelper.addUser("admin", "admin", "admin", "Administrator", "None", "Office");
+            if (addAdmin.equals(true)) {
+                Log.d("SETUP_ADMIN", "onCreate: Admin Successfully Registeres");
             } else {
-                Log.d("SETUP_ADMIN","onCreate: Admin Registration Failed");
+                Log.d("SETUP_ADMIN", "onCreate: Admin Registration Failed");
             }
         } else {
-            Log.d("CHECK_ADMIN","onCreate: Admin Already Registered");
+            Log.d("CHECK_ADMIN", "onCreate: Admin Already Registered");
         }
     }
 }

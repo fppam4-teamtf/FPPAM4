@@ -18,7 +18,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:contentScrim="?attr/colorPrimary"
             android:fitsSystemWindows="true"
             app:titleEnabled="true"
@@ -27,16 +27,17 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/img_dummy"/>
+                android:layout_height="wrap_content"
+                android:src="@drawable/dummy_landscape_poster"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"/>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_preview"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/value" />
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -47,9 +48,18 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="80dp"
+        app:layout_anchor="@id/fab_del"
+        app:layout_anchorGravity="start|center"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@android:drawable/ic_menu_delete" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

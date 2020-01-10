@@ -9,7 +9,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -31,7 +30,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 
     private SharedPreferences prefs;
     private MainActivity main;
-    private ActionBar actionBar;
+    private AuthFragment authFragment;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -55,8 +54,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         prefs = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
 
         main = (MainActivity) getActivity();
-        assert main != null;
-        actionBar = main.getSupportActionBar();
+        authFragment = AuthFragment.newInstance();
 
         TextView tvUserId = v.findViewById(R.id.tv_userid);
         TextView tvUserName = v.findViewById(R.id.tv_nama);
@@ -117,11 +115,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
                         editor.clear();
                         editor.apply();
 
-                        main.replaceFragment(AuthFragment.newInstance(), getString(R.string.tag_auth_fragment));
-
-                        actionBar.setTitle(R.string.login);
-                        actionBar.setDisplayHomeAsUpEnabled(true);
-                        actionBar.setDisplayShowHomeEnabled(true);
+                        main.replaceFragment(authFragment, getString(R.string.tag_auth_fragment), getString(R.string.tag_main_fragment));
                     }
                 });
                 builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {

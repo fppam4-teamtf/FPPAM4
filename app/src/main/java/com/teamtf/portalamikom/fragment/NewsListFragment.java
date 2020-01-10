@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -57,6 +58,12 @@ public class NewsListFragment extends Fragment implements View.OnClickListener, 
 
         dbHandler = new DatabaseHandler(getActivity());
 
+        adminPanel = (AdminPanelActivity) getActivity();
+        addNews = AddNewsFragment.newInstance();
+        bundle = new Bundle();
+
+        adminPanel.setUpToolbar(getString(R.string.news_content));
+
         rvNewsList = v.findViewById(R.id.rv_content_list);
         rvNewsList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -67,19 +74,23 @@ public class NewsListFragment extends Fragment implements View.OnClickListener, 
         categorySpinner.setAdapter(spinnerArrayAdapter);
         categorySpinner.setOnItemSelectedListener(this);
 
-        categorySpinner.setSelection(getArguments().getInt("position"));
+        if (getArguments() != null) {
+            categorySpinner.setSelection(getArguments().getInt("position"));
+        }
 
         CardView cvAdd = v.findViewById(R.id.cv_add);
         cvAdd.setOnClickListener(this);
+
         dialog = new AlertDialog.Builder(getActivity()).create();
 
         newsData = new ArrayList<NewsList>();
 
-        adminPanel = (AdminPanelActivity) getActivity();
-        addNews = AddNewsFragment.newInstance();
-        bundle = new Bundle();
-
         return v;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -98,16 +109,16 @@ public class NewsListFragment extends Fragment implements View.OnClickListener, 
             case R.id.cv_add_news_dialog:
                 dialog.dismiss();
                 bundle.putString("category", getString(R.string.news));
+                bundle.putString("action", getString(R.string.add));
                 addNews.setArguments(bundle);
-                adminPanel.replaceFragment(addNews,  getString(R.string.tag_add_news_fragment));
-                adminPanel.setUpToolbar("Tambah Berita");
+                adminPanel.replaceFragment(addNews,  getString(R.string.tag_add_news_fragment), getString(R.string.tag_news_list_fragment));
                 break;
             case R.id.cv_add_event_dialog:
                 dialog.dismiss();
                 bundle.putString("category", getString(R.string.event));
+                bundle.putString("action", getString(R.string.add));
                 addNews.setArguments(bundle);
-                adminPanel.replaceFragment(addNews, getString(R.string.tag_add_news_fragment));
-                adminPanel.setUpToolbar("Tambah Event");
+                adminPanel.replaceFragment(addNews, getString(R.string.tag_add_news_fragment),getString(R.string.tag_news_list_fragment));
                 break;
         }
     }

@@ -6,14 +6,15 @@ public class News {
     private String category, title, date, content, publisher, imgResource;
 //    private final int imgResource;
 
-    public News(int id, String category, String title, String date, String content, String publisher, String imgResource) {
+    public News(int id, String category, String title, String date, String content, String imgResource, String publisher) {
         this.id = id;
         this.category = category;
         this.title = title;
         this.date = date;
         this.content = content;
-        this.publisher = publisher;
         this.imgResource = imgResource;
+        this.publisher = publisher;
+
     }
 
     public int getId() {

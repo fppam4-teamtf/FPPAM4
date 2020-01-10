@@ -254,6 +254,7 @@
     <string name="tag_account_fragment">ACCOUNT</string>
     <string name="tag_event_fragment">EVENT</string>
     <string name="tag_news_fragment">NEWS</string>
+    <string name="edit">Edit</string>
 
     <string-array name="news_category">
         <item>Berita</item>
