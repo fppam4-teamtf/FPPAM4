@@ -1,5 +1,6 @@
 package com.teamtf.portalamikom;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import com.teamtf.portalamikom.handler.DatabaseHandler;
 import com.teamtf.portalamikom.model.News;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -21,7 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PreviewActivity extends AppCompatActivity {
+public class PreviewActivity extends AppCompatActivity implements View.OnClickListener {
 
     private DatabaseHandler dbHandler;
     private SharedPreferences prefs;
@@ -49,46 +51,36 @@ public class PreviewActivity extends AppCompatActivity {
         dbHandler = new DatabaseHandler(this);
         prefs = getSharedPreferences("login", MODE_PRIVATE);
         adminPanel = new AdminPanelActivity();
+        addNews = AddNewsFragment.newInstance();
         bundle = new Bundle();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
+        FloatingActionButton fabDelete = (FloatingActionButton) findViewById(R.id.fab_delete);
 
         tvTitle = findViewById(R.id.tv_news_title);
         tvDate = findViewById(R.id.tv_news_date);
         tvPublisher = findViewById(R.id.tv_news_publisher);
         tvContent = findViewById(R.id.tv_news_content);
 
-        News news = dbHandler.getNewsData(getIntent().getIntExtra("id",0));
+        News news = dbHandler.getNewsData(getIntent().getIntExtra("id", 0));
 
         id = news.getId();
         category = news.getCategory();
         tvTitle.setText(news.getTitle());
-        tvPublisher.setText("Publisher : "+news.getPublisher());
+        tvPublisher.setText("Publisher : " + news.getPublisher());
         tvDate.setText(news.getDate());
         tvContent.setText(news.getContent());
 
-        if (!prefs.getBoolean("isLogin",false) && !prefs.getString("privilages","").equals("admin")){
-            fab.setEnabled(false);
-            fab.hide();
+        if (!prefs.getBoolean("isLogin", false) && !prefs.getString("privilages", "").equals("admin")) {
+            fabEdit.setEnabled(false);
+            fabEdit.hide();
+            fabDelete.setEnabled(false);
+            fabDelete.hide();
         } else {
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                    addNews = AddNewsFragment.newInstance();
-                    bundle.putString("category", category);
-                    bundle.putString("action", getString(R.string.edit));
-                    bundle.putInt("id",id);
-                    bundle.putString("title", tvTitle.getText().toString());
-                    bundle.putString("content", tvContent.getText().toString());
-                    addNews.setArguments(bundle);
-                    Intent i = new Intent(PreviewActivity.this,AdminPanelActivity.class);
-                    i.putExtra("position",2);
-                    i.putExtras(bundle);
-                    startActivity(i);
-                    finish();
-                }
-            });
-            fab.show();
+            fabEdit.setOnClickListener(this);
+            fabEdit.show();
+            fabDelete.setOnClickListener(this);
+            fabDelete.show();
         }
     }
 
@@ -105,7 +97,50 @@ public class PreviewActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fab_edit:
+                addNews = AddNewsFragment.newInstance();
+                bundle.putString("category", category);
+                bundle.putString("action", getString(R.string.edit));
+                bundle.putInt("id", id);
+                bundle.putString("title", tvTitle.getText().toString());
+                bundle.putString("content", tvContent.getText().toString());
+                addNews.setArguments(bundle);
+                Intent i = new Intent(PreviewActivity.this, AdminPanelActivity.class);
+                i.putExtra("position", 2);
+                i.putExtras(bundle);
+                startActivity(i);
+                finish();
+                break;
+            case R.id.fab_delete:
+                AlertDialog.Builder builder = new  AlertDialog.Builder(this);
+                builder.setTitle(getString(R.string.delete)+" "+category);
+                builder.setMessage("Data yang telah di hapus tidak dapat dikembalikan lagi." +
+                        "\nAnda yakin untuk menghapus ?");
+                builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("FAB_DELETE", "onClick: delete fab Yes active");
+                    }
+                });
+                builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
+
 }

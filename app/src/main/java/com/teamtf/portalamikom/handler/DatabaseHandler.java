@@ -131,6 +131,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return ins != -1;
     }
 
+    public boolean editNews(int id, String title, String content, String image){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(NEWS_TITLE, title);
+        cv.put(NEWS_CONTENT, content);
+        cv.put(NEWS_IMAGE, image);
+
+        long ins = db.update(TABLE_NEWS,cv,NEWS_ID+"=?",new String[]{String.valueOf(id)});
+        return ins != -1;
+    }
+
     public ArrayList<NewsList> getNewsListData(String category){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT "+NEWS_ID+", "+NEWS_TITLE+", "+NEWS_DATE+" FROM "+TABLE_NEWS+" WHERE "+NEWS_CATEGORY+"=?",new String[]{category});
