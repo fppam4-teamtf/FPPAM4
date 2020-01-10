@@ -26,12 +26,13 @@
             app:toolbarId="@+id/toolbar_preview">
 
             <ImageView
+                android:id="@+id/iv_img_preview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/image_preview_desc"
                 android:scaleType="centerCrop"
                 android:src="@drawable/dummy_landscape_poster"
-                app:layout_collapseMode="parallax"
-                android:contentDescription="@string/image_preview_desc" />
+                app:layout_collapseMode="parallax" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_preview"
@@ -45,26 +46,28 @@
 
     <include layout="@layout/content_preview" />
 
-    <RelativeLayout
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="84dp"
         app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end">
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_edit" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_toEndOf="@id/fab_edit"
-            app:srcCompat="@android:drawable/ic_menu_delete" />
-    </RelativeLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

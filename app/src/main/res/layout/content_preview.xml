@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_ed"
+    android:background="@color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".PreviewActivity"
     tools:showIn="@layout/activity_preview">
@@ -45,7 +45,6 @@
                 android:textSize="12sp"/>
         </LinearLayout>
 
-
         <TextView
             android:id="@+id/tv_news_content"
             android:layout_width="match_parent"
@@ -55,7 +54,6 @@
             android:fontFamily="@font/muli_font_family"
             android:textSize="12sp"
             android:text="@string/value" />
-
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

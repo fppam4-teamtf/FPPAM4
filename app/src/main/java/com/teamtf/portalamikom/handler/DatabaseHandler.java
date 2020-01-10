@@ -6,6 +6,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -64,7 +66,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Log.d("DB_Helper", "onCrreate: " + CREATE_LOG_USER);
         db.execSQL(CREATE_LOG_USER);
 
-        String CREATE_NEWS = "CREATE TABLE "+TABLE_NEWS+"("+NEWS_ID+" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+NEWS_CATEGORY+" TEXT NOT NULL, "+NEWS_TITLE+" TEXT NOT NULL, "+NEWS_DATE+" DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, "+NEWS_CONTENT+" TEXT NOT NULL, "+NEWS_IMAGE+" TEXT NULL, "+NEWS_PUBLISHER+" TEXT NOT NULL, FOREIGN KEY("+NEWS_PUBLISHER+") REFERENCES "+TABLE_USER+"("+USER_ID+"))";
+        String CREATE_NEWS = "CREATE TABLE "+TABLE_NEWS+"("+NEWS_ID+" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "+NEWS_CATEGORY+" TEXT NOT NULL, "+NEWS_TITLE+" TEXT NOT NULL, "+NEWS_DATE+" DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, "+NEWS_CONTENT+" TEXT NOT NULL, "+NEWS_IMAGE+" BLOB NULL, "+NEWS_PUBLISHER+" TEXT NOT NULL, FOREIGN KEY("+NEWS_PUBLISHER+") REFERENCES "+TABLE_USER+"("+USER_ID+"))";
         Log.d("DB_Helper", "onCrreate: " + CREATE_NEWS);
         db.execSQL(CREATE_NEWS);
     }
@@ -117,7 +119,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return new User(cursor.getString(0),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5));
     }
 
-    public boolean addNews(String category, String title, String content, String image, String publisher){
+    public boolean addNews(String category, String title, String content, byte[] image, String publisher){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -173,6 +175,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        return new News(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
+        byte[] imgByte = cursor.getBlob(5);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(imgByte,0,imgByte.length);
+        return new News(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4), bitmap,cursor.getString(6));
     }
 }

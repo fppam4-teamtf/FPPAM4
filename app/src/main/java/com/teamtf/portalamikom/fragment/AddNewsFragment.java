@@ -1,21 +1,31 @@
 package com.teamtf.portalamikom.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.teamtf.portalamikom.AdminPanelActivity;
@@ -23,11 +33,19 @@ import com.teamtf.portalamikom.R;
 import com.teamtf.portalamikom.handler.DatabaseHandler;
 import com.teamtf.portalamikom.model.News;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class AddNewsFragment extends Fragment implements View.OnClickListener {
 
     private DatabaseHandler dbHandler;
     private SharedPreferences prefs;
     private EditText etTitle, etImage, etContent;
+    private CardView cvBrowseImage;
+    private ImageView ivAddImage;
     private String category;
     private String action;
     private int id;
@@ -35,6 +53,8 @@ public class AddNewsFragment extends Fragment implements View.OnClickListener {
     private AdminPanelActivity adminPanel;
     private NewsListFragment newsList;
     private Bundle bundle;
+
+    private final int PICK_IMAGE = 1;
 
     public AddNewsFragment() {
         // Required empty public constructor
@@ -65,6 +85,9 @@ public class AddNewsFragment extends Fragment implements View.OnClickListener {
 
         etTitle = v.findViewById(R.id.et_title);
         etImage = v.findViewById(R.id.img_src_news);
+        cvBrowseImage = v.findViewById(R.id.cv_browse_image);
+        cvBrowseImage.setOnClickListener(this);
+        ivAddImage = v.findViewById(R.id.iv_add_image);
         etContent = v.findViewById(R.id.et_content);
         btnAdd = v.findViewById(R.id.btn_add);
 
@@ -92,9 +115,29 @@ public class AddNewsFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_add:
                 addNews();
                 break;
+            case R.id.cv_browse_image:
+                Intent iGalery = new Intent();
+                iGalery.setType("image/*");
+                iGalery.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(iGalery,"Pick Image"),PICK_IMAGE);
+                break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == PICK_IMAGE && resultCode == getActivity().RESULT_OK){
+            Uri imageUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),imageUri);
+                ivAddImage.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -106,6 +149,11 @@ public class AddNewsFragment extends Fragment implements View.OnClickListener {
     public void addNews() {
         String title = etTitle.getText().toString();
         String content = etContent.getText().toString();
+
+        Bitmap bitmap = ((BitmapDrawable) ivAddImage.getDrawable()).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+        byte[] image = stream.toByteArray();
 
         if (title.equals("")) {
             Toast.makeText(getActivity(), "Anda belum memasukkan Judul " +
@@ -120,7 +168,7 @@ public class AddNewsFragment extends Fragment implements View.OnClickListener {
                         category,
                         title,
                         content,
-                        "image",
+                        image,
                         prefs.getString("userid", getString(R.string.value)));
 
                 if (addNews.equals(true)) {

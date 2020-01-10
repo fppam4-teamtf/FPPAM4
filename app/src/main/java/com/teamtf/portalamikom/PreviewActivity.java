@@ -3,11 +3,10 @@ package com.teamtf.portalamikom;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.teamtf.portalamikom.fragment.AddNewsFragment;
 import com.teamtf.portalamikom.handler.DatabaseHandler;
 import com.teamtf.portalamikom.model.News;
@@ -20,6 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +37,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     private TextView tvDate;
     private TextView tvPublisher;
     private TextView tvContent;
+    private ImageView ivPreview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         tvDate = findViewById(R.id.tv_news_date);
         tvPublisher = findViewById(R.id.tv_news_publisher);
         tvContent = findViewById(R.id.tv_news_content);
+        ivPreview = findViewById(R.id.iv_img_preview);
 
         News news = dbHandler.getNewsData(getIntent().getIntExtra("id", 0));
 
@@ -70,6 +72,8 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
         tvPublisher.setText("Publisher : " + news.getPublisher());
         tvDate.setText(news.getDate());
         tvContent.setText(news.getContent());
+        Bitmap bitmap = news.getImgResource();
+        ivPreview.setImageBitmap(bitmap);
 
         if (!prefs.getBoolean("isLogin", false) && !prefs.getString("privilages", "").equals("admin")) {
             fabEdit.setEnabled(false);

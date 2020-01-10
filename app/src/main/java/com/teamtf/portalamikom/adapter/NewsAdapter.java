@@ -23,14 +23,14 @@ public class NewsAdapter {
 
         private TextView tvTitle;
         private TextView tvDate;
-        private ImageView ivInfo;
+        private ImageView ivNews;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvTitle = itemView.findViewById(R.id.tv_info_title);
             tvDate = itemView.findViewById(R.id.tv_info_date);
-            ivInfo = itemView.findViewById(R.id.iv_info);
+            ivNews = itemView.findViewById(R.id.iv_info);
 
 //            itemView.setOnClickListener(this);
         }
@@ -44,7 +44,7 @@ public class NewsAdapter {
         void bindTo(News currentInfo){
             tvTitle.setText(currentInfo.getTitle());
             tvDate.setText(currentInfo.getDate());
-            Glide.with(context).load(currentInfo.getImgResource()).into(ivInfo);
+            Glide.with(context).load(currentInfo.getImgResource()).into(ivNews);
         }
 
         @Override

@@ -1,12 +1,15 @@
 package com.teamtf.portalamikom.model;
 
+import android.graphics.Bitmap;
+
 public class News {
 
     private int id;
-    private String category, title, date, content, publisher, imgResource;
+    private String category, title, date, content, publisher;
+    private Bitmap imgResource;
 //    private final int imgResource;
 
-    public News(int id, String category, String title, String date, String content, String imgResource, String publisher) {
+    public News(int id, String category, String title, String date, String content, Bitmap imgResource, String publisher) {
         this.id = id;
         this.category = category;
         this.title = title;
@@ -37,7 +40,7 @@ public class News {
         return content;
     }
 
-    public String getImgResource() {
+    public Bitmap getImgResource() {
         return imgResource;
     }
 
