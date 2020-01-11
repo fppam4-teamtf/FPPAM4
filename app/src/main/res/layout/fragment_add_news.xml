@@ -63,19 +63,12 @@
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/img_src_news"
+                    <ImageView
+                        android:id="@+id/iv_add_image"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="210dp"
                         android:layout_weight="1"
-                        android:background="@drawable/background_input_group"
-                        android:fontFamily="@font/muli_font_family"
-                        android:inputType="text"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingBottom="16dp"
-                        android:textSize="14sp" />
+                        android:background="@color/light_ed"/>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cv_browse_image"
@@ -104,11 +97,7 @@
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/iv_add_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/dummy_landscape_poster"/>
+
 
                 <TextView
                     android:layout_width="match_parent"

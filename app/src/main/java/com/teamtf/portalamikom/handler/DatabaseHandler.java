@@ -134,7 +134,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return ins != -1;
     }
 
-    public boolean editNews(int id, String title, String content, String image){
+    public boolean editNews(int id, String title, String content, byte[] image){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 

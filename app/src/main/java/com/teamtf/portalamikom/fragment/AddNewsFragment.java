@@ -84,7 +84,6 @@ public class AddNewsFragment extends Fragment implements View.OnClickListener {
         adminPanel.setUpToolbar(getString(R.string.add_news));
 
         etTitle = v.findViewById(R.id.et_title);
-        etImage = v.findViewById(R.id.img_src_news);
         cvBrowseImage = v.findViewById(R.id.cv_browse_image);
         cvBrowseImage.setOnClickListener(this);
         ivAddImage = v.findViewById(R.id.iv_add_image);
@@ -98,6 +97,9 @@ public class AddNewsFragment extends Fragment implements View.OnClickListener {
                 id = getArguments().getInt("id");
                 etTitle.setText(getArguments().getString("title"));
                 etContent.setText(getArguments().getString("content"));
+                byte[] image = getArguments().getByteArray("image");
+                Bitmap bitmap = BitmapFactory.decodeByteArray(image,0,image.length);
+                ivAddImage.setImageBitmap(bitmap);
             }
         }
 
@@ -193,7 +195,7 @@ public class AddNewsFragment extends Fragment implements View.OnClickListener {
             if (action.equals(getString(R.string.edit))) {
                 Log.d(action, "addNews 2: " + action);
 
-                Boolean editNews = dbHandler.editNews(id,title,content, "image");
+                Boolean editNews = dbHandler.editNews(id,title,content, image);
                 if (editNews.equals(true)) {
                     Toast.makeText(getActivity(), category + " berhasil diperbarui.",
                             Toast.LENGTH_SHORT).show();

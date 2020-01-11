@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,6 +23,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
 
 public class PreviewActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -110,6 +113,11 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
                 bundle.putInt("id", id);
                 bundle.putString("title", tvTitle.getText().toString());
                 bundle.putString("content", tvContent.getText().toString());
+                Bitmap bitmap = ((BitmapDrawable) ivPreview.getDrawable()).getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+                byte[] image = stream.toByteArray();
+                bundle.putByteArray("image", image);
                 addNews.setArguments(bundle);
                 Intent i = new Intent(PreviewActivity.this, AdminPanelActivity.class);
                 i.putExtra("position", 2);
